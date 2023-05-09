@@ -1,5 +1,5 @@
-let playerScore = 0
-let computerScore = 0
+let playerScore = 0;
+let computerScore = 0;
 
 const lose = 'You lose this round!'
 const win = 'You win this round!'
@@ -11,7 +11,8 @@ const tie = 'Its a tie, Try again'
         return choice 
         }
         
- const btns = document.querySelectorAll('button');
+ const btns = document.querySelectorAll('.btn');
+ const refresh = document.querySelector('.refresh')
  const body = document.querySelector('body');
  const results = document.createElement('div');
  const resText = document.createElement('div');
@@ -19,6 +20,11 @@ const tie = 'Its a tie, Try again'
  body.appendChild(resText);
  results.textContent = 'Score';
  resText.textContent = '';
+ refresh.addEventListener('click', (e)=> {
+  location.href = location.href;
+
+ })
+
 
  btns.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -30,24 +36,32 @@ playRound(playerSelection, computerSelection);
     });
  })
 
-        function playRound(playerSelection, computerSelection) {
-            
-            if ((playerSelection === "rock" && computerSelection === "paper") 
-            || (playerSelection === "scissors" && computerSelection === "rock") 
-            || (playerSelection === "paper" && computerSelection === "scissors")){
-             computerScore++;
-             resText.textContent = lose;
-            }else if(playerSelection == computerSelection){
-             resText.textContent = tie;
-             } else if (!(playerSelection === "rock" || playerSelection === 'paper' || playerSelection === 'scissors')){
-                alert ('Improper selection made try again')
-                
-             }else {playerScore++;  resText.textContent = win; }
-             results.textContent = 'Player score ' + playerScore + ',' + 'Computer score ' + computerScore;
-        }
-
-
-
+ function playRound(playerSelection, computerSelection) {
+    if (playerScore === 5 || computerScore === 5) {
+      return;
+    }
+    if ((playerSelection === 'rock' && computerSelection === 'paper') || 
+        (playerSelection === 'scissors' && computerSelection === 'rock') || 
+        (playerSelection === 'paper' && computerSelection === 'scissors')) {
+      computerScore++;
+      resText.textContent = lose;
+    } else if (playerSelection == computerSelection) {
+      resText.textContent = tie;
+    } else if (!(playerSelection === 'rock' || playerSelection === 'paper' || playerSelection === 'scissors')) {
+      alert('Improper selection made try again')
+    } else {
+      playerScore++;
+      resText.textContent = win;
+    }
+  
+    results.textContent = 'Player score: ' + playerScore  + ' ' + 'Computer score: ' + computerScore;
+  
+    if (playerScore === 5) {
+      resText.textContent = 'You have won!';
+    } else if (computerScore === 5) {
+      resText.textContent = 'Computer has won';
+    }
+  }
 
 
 
